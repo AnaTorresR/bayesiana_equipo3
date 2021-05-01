@@ -1,0 +1,80 @@
+---
+title: "Capítulo 18"
+subtitle: "⚔<br/>"
+author: 
+  - Iván Oswaldo Salgado Velázquez
+  - Aide Jazmín González Cruz
+  - Ana Eréndira Torres Ramírez
+  - Victor Erasto
+  - Oscar Arturo Bringas López
+institute: "ITAM"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+<!-- background-image: url(https://upload.wikimedia.org/wikipedia/commons/b/be/Sharingan_triple.svg) -->
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+
+library(xaringanExtra)
+
+xaringanExtra::use_logo(
+  image_url = "http://escolar.itam.mx/centro_tesis/img/logo-ITAM.png",
+  position = xaringanExtra::css_position(top = "1em", right = "1em")
+)
+
+xaringanExtra::use_broadcast()
+
+xaringanExtra::use_panelset()
+xaringanExtra::style_panelset_tabs(
+  active_foreground = "#061b94",
+  hover_foreground = "#000000",
+  font_family = "Roboto"
+)
+```
+
+???
+
+comentarios
+más comentarios
+más comentarios
+
+---
+class: center, middle
+
+# Objetivo
+
+bla bla bla bla
+
+---
+class: inverse, center, middle
+
+# Capítulo 18.1
+
+---
+class: inverse, center, middle
+
+# Capítulo 18.2
+
+---
+class: inverse, center, middle
+
+# Capítulo 18.3
+
+---
+class: inverse, center, middle
+
+# Capítulo 18.4
+
+---
+
+
+
+
+
