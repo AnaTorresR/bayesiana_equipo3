@@ -63,7 +63,108 @@ class: inverse, center, middle
 # Capítulo 18.2
 
 ---
+El marco de contrafactuales o potenciales agregan claridad al 
+significado de los efectos causales, pero también resalta el desafío inherente
+en la estimación de estos. 
+
+En experimentos en los que solo se aplica un tratamiento a cada individuo,
+no será posible estimar los efectos causales individuales, $y^1_i − y^0_i$.
+---
+## ¿Qué hacemos?
+
+
+Supongamos que los individuos pueden aplicar a ambos estudios tratamiento y 
+control, es decir, se tiene $y^1_i, y^0_i$ para cada individuo. 
+
+Dados estos dos resultados potenciales se puede obtener el efecto del tratamiento 
+de cada individuo.
+
+$$\tau_i = y^1_i − y^0_i$$
+---
+## Por ejemplo 
+![](img/ejemplo.png)
+
+Existen diferencias entre los grupos de tratamiento y de control por lo que se 
+deben de realizar ciertos ajustes para estimar el efecto causal. 
+ 
+El efecto causal $\tau_i$ puede variar de persona en persona; es por eso que el
+el cálculo de éste dependerá de que grupo de personas se está promediando este
+efecto.
+---
+## Efectos medios del tratamiento 
+
+.panelset[
+.panel[.panel-name[SATE (Sample Average Treatment Effect)]
+
+Este estimador se calcula como el promedio de los efectos causales de cada individuo.
+
+$$\tau_{SATE}=\frac{1}{n} \sum_{i=1}^n(y_i^1 - y_i^0)$$
+]
+
+.panel[.panel-name[CATE (Conditional Average Treatment Effect)]
+
+Este estimador se calcula para subconjuntos definidos de la muesta, por ejemplo, 
+por edad, por género, etc. 
+
+Estos estimadores condicionales pueden tomar formas complicadas como las
+predicciones de los modelos de regresión lineal.
+]
+.panel[.panel-name[PATE (Population average treatment effect)]]
+
+Investigadores desean hacer inferencia sobre cierta población de interés en vez de simplemente estudiar una muestra. 
+
+Realísticamente, los individuos que forman parte de un experimento social o médico 
+no son obtenidos de manera aleatoria o representativa de una población. 
+
+Mientras mejor esté hecha la muestra para hacer inferencias causales, esta se vuelve
+menos representativa de la población conocida. 
+
+$$\tau_{PATE} = \frac{1}{N} \sum_{i=1}^n(y_i^1 - y_i^0)$$
+
+]
+]
+---
+En este problema inferencial existen dos tipos de datos faltantes:
+
+* Valores contrafactuales de la muestra
+* Resultados (ambos) de los individuos que no forman parte de la muestra.
+
+Si la muestra de estudio es aleatoria entonces cualquier estimador insesgado de 
+**SATE** será estimador insesgado de **PATE**. Más aún, cuando se ajustan modelos 
+de regresión, el estimador **PATE** dependerá de la distribución asumida de los 
+predictores en la población de interés.
+---
+Por ejemplo, si el efecto del tratamiento estimado es mayor para las mujeres que 
+para los hombres entonces el estimador **PATE** dependerá de la proporción de 
+hombres y mujeres de la población de interés. 
+
+Si la muestra no es aleatoria, estimar **PATE** requiere un modelo del efecto del 
+tratamiento dados los predictores previos al tratamiento que nos permitan extrapolar
+de unidades experimentales a la población general. 
+---
+## Problemas de autoselección en grupos de tratamiento.
+
+Aunque se tengan la misma cantidad de hombres y mujeres en ambos
+grupos, los individuos que se encuentran en el grupo de control son más jóvenes que 
+los individuos que se encuentran en el grupo de tratamiento. Esta inferencia de
+edad se debe tomar en cuenta debido a que la edad también influye en el resultado. 
+
+Los resultados potenciales encapsulan toda la información necesaria con respecto a lo que necesitamos para que ésta información sea similar en ambos grupos.
+Dado que no podemos ajustar los datos directamente, utilizamos nuestras variables de pre entratamiento como una sustitutos. 
+---
+## Como abordar el desbalance entre los grupos de tratamiento y control
+
+Existen enfoque estadísticos que nos ayudan a asegurar el balance entre los grupos 
+de control y tratamiento. 
+
+* Etapa de diseño:  Se utiliza **aleatorización** para asegurar balance entre ambos grupos. Y se utiliza el **bloqueo** para reducir la variación en cualquier desbalance. 
+
+* Etapa de análisis: Se pueden **ajustar** para que las variables previas al tratamiento corrijan las diferencias entre los dos grupos para reducir sesgos en la estimación del efecto del tratamiento promedio de la muestra. Más aún, se pueden ajustar las diferencias entre la muestra y la población si el objetivo es estimar el efecto del tratamiento promedio de la población.
+
+---
 class: inverse, center, middle
+
+
 
 # Capítulo 18.3
 
