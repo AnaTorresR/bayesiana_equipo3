@@ -52,6 +52,8 @@ class: inverse, center, middle
 
 # Capítulo 18.1
 
+## Bases de la inferencia causal
+
 ---
 class: inverse, center, middle
 
@@ -96,9 +98,15 @@ Existen diferencias entre los grupos de tratamiento y de control por lo que se
 deben de realizar ciertos ajustes para estimar el efecto causal. 
  
 El efecto causal $\tau_i$ puede variar de persona en persona; es por eso que el
-cálculo de éste dependerá de que grupo de personas se está promediando este
+cálculo de éste dependerá de en qué grupo de personas se está promediando este
 efecto.
 ]
+
+???
+
+Consideremos de nuevo nuestra hipótesis de 8 personas en el estudio. Suponga que la figura 18.2 fue mostrada por los datos que pudieron haberse visto si fuéramos capaces de aplicar tanto el tratamiento como el control a cada persona. 
+
+Bajo este estado de omnisciencia, podríamos ver tanto $y^1$ y $y^0$ para cada participante en el estudio. Dados todos estos posibles resultados, podemos directamente calcular el efecto del tratamiento para cada persona:
 
 ---
 
@@ -184,17 +192,23 @@ de unidades experimentales a la población general.
 
 <div style="text-align: justify">
 
-Aunque se tengan la misma cantidad de hombres y mujeres en ambos
-grupos, los individuos que se encuentran en el grupo de control son más jóvenes que 
-los individuos que se encuentran en el grupo de tratamiento. Esta inferencia de
-edad se debe tomar en cuenta debido a que la edad también influye en el resultado. 
+El punto inicial es la comparación de los grupos de tratamiento y control, y podemos correr en problemas si estos dos grupos no son suficientemente similares o balanceados. En el ejemplo propuesto, vemos que la gente que recibió el tratamiento fueron en promedio mayores que los del grupo de control.
 
 Los resultados potenciales encapsulan toda la información necesaria con respecto a lo que necesitamos para que ésta información sea similar en ambos grupos.
-Dado que no podemos ajustar los datos directamente, utilizamos nuestras variables de pre entratamiento como una sustitutos. 
+Dado que no podemos ajustar los datos directamente, utilizamos nuestras variables de pre-tratamiento como sustitutos. 
 
 ```{r, fig.align='center', out.height='250', out.width='400', echo=F}
 knitr::include_graphics("img/age-groups2.jpeg")
 ```
+
+???
+
+Esta diferencia pudo haber ocurrido solo por azar o quizá porque aquellos que accedieron a tomar los suplementos estaban más conscientes sobre su presión sanguínea y el estudio ofreció la oportunidad de probar estos suplementos de manera gratuita, mientras que aquellos que accedieron a estar en el grupo de no suplementos, no le importaba si los suplementos podrían beneficiar su salud.
+
+Aunque se tengan la misma cantidad de hombres y mujeres en ambos
+grupos, los individuos que se encuentran en el grupo de control son más jóvenes que 
+los individuos que se encuentran en el grupo de tratamiento. Esta inferencia de
+edad se debe tomar en cuenta debido a que la edad también influye en el resultado.
 
 ---
 
@@ -205,7 +219,7 @@ knitr::include_graphics("img/age-groups2.jpeg")
 Existen enfoque estadísticos que nos ayudan a asegurar el balance entre los grupos 
 de control y tratamiento. 
 
-* **Etapa de diseño:** Se utiliza **aleatorización** para asegurar balance entre ambos grupos. Y se utiliza el **bloqueo** para reducir la variación en cualquier desbalance. 
+* **Etapa de diseño:** Se utiliza **aleatorización** para asegurar balance entre ambos grupos. Y se utiliza el **bloqueo/estratificación** para reducir la variación en cualquier desbalance. 
 
 * **Etapa de análisis:** Se pueden **ajustar** para que las variables previas al tratamiento corrijan las diferencias entre los dos grupos para reducir sesgos en la estimación. 
 
@@ -220,10 +234,14 @@ class: inverse, center, middle
 
 # Capítulo 18.3
 
+## Experimentos Aleatorizados
+
 ---
 class: inverse, center, middle
 
 # Capítulo 18.4
+
+## Distribuciones muestrales, distribuciones aleatorizadas, y sesgo en la estimación
 
 ---
 
