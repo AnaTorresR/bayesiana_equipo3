@@ -1,6 +1,6 @@
 ---
-title: "Capítulo 18"
-subtitle: "⚔<br/>"
+title: "Modelos Lineales Generalizados"
+subtitle: "⚔ Capítulo 18 ⚔<br/>"
 author: 
   - Iván Oswaldo Salgado Velázquez
   - Aide Jazmín González Cruz
@@ -17,10 +17,12 @@ output:
       countIncrementalSlides: false
 ---
 
-<!-- background-image: url(https://upload.wikimedia.org/wikipedia/commons/b/be/Sharingan_triple.svg) -->
+class: center, middle
 
-```{r setup, include=FALSE}
-options(htmltools.dir.version = FALSE)
+<div style="text-align: justify">
+
+```{r setup, echo=FALSE}
+#options(htmltools.dir.version = FALSE)
 
 library(xaringanExtra)
 
@@ -39,18 +41,11 @@ xaringanExtra::style_panelset_tabs(
 )
 ```
 
-???
-
-comentarios
-más comentarios
-más comentarios
-
----
-class: center, middle
-
 # Objetivo
 
-bla bla bla bla
+El objetivo de este capítulo es conocer las principales definiciones y problemáticas asociados a los diseños de experimentos que pretenden inferir el efecto asociado a un tratamiento o exposición aplicado a un individuo. 
+
+A lo largo del capítulo se analizan diferentes problemas junto con sus respectivas hipótesis y propuestas de solución.
 
 ---
 class: inverse, center, middle
@@ -62,16 +57,24 @@ class: inverse, center, middle
 
 # Capítulo 18.2
 
----
-El marco de contrafactuales o potenciales agregan claridad al 
-significado de los efectos causales, pero también resalta el desafío inherente
-en la estimación de estos. 
+## Efectos Causales Promedio
 
-En experimentos en los que solo se aplica un tratamiento a cada individuo,
-no será posible estimar los efectos causales individuales, $y^1_i − y^0_i$.
+---
+
+## Efectos causales promedio
+
+<div style="text-align: justify">
+
+El contra-factual o resultado potencial añade claridad al significado de efectos causales, pero también resalta el desafío inherente en su estimación. 
+
+En experimentos en la cuales solo un tratamiento es aplicado a cada individuo, no será posible estimar el efecto causal a **nivel individuo**, $y^1_i − y^0_i$.
+
+```{r, fig.align='center', out.height='300', out.width='600', echo=F}
+knitr::include_graphics("img/red_and_blue_pill.jpeg")
+```
+
 ---
 ## ¿Qué hacemos?
-
 
 Supongamos que los individuos pueden aplicar a ambos estudios tratamiento y 
 control, es decir, se tiene $y^1_i, y^0_i$ para cada individuo. 
@@ -80,60 +83,93 @@ Dados estos dos resultados potenciales se puede obtener el efecto del tratamient
 de cada individuo.
 
 $$\tau_i = y^1_i − y^0_i$$
----
-## Por ejemplo 
-![](img/ejemplo.png)
+**Por ejemplo:**
+
+.pull-left[
+```{r, fig.align='center', out.height='150', out.width='500', echo=F}
+knitr::include_graphics("img/ejemplo.png")
+```
+]
+.pull-right[
 
 Existen diferencias entre los grupos de tratamiento y de control por lo que se 
 deben de realizar ciertos ajustes para estimar el efecto causal. 
  
 El efecto causal $\tau_i$ puede variar de persona en persona; es por eso que el
-el cálculo de éste dependerá de que grupo de personas se está promediando este
+cálculo de éste dependerá de que grupo de personas se está promediando este
 efecto.
+]
+
 ---
+
 ## Efectos medios del tratamiento 
 
 .panelset[
-.panel[.panel-name[SATE (Sample Average Treatment Effect)]
+.panel[.panel-name[SATE]
 
-Este estimador se calcula como el promedio de los efectos causales de cada individuo.
+#### Sample Average Treatment Effect
+
+Este estimado, llamado **Efecto promedio de tratamiento muestra** o SATE, puede ser calculado al promediar todos los $y_i^1$ y sustraer el promedio de los $y^0_i$ en al muestra. Equivalentemente y quizá más intuitivamente, podemos simplemente promediar los efectos causales a nivel individual.
 
 $$\tau_{SATE}=\frac{1}{n} \sum_{i=1}^n(y_i^1 - y_i^0)$$
+```{r, fig.align='center', out.height='150', out.width='300', echo=F}
+knitr::include_graphics("img/sample.png")
+```
+
 ]
 
-.panel[.panel-name[CATE (Conditional Average Treatment Effect)]
+.panel[.panel-name[CATE]
+
+#### Conditional Average Treatment Effect
 
 Este estimador se calcula para subconjuntos definidos de la muesta, por ejemplo, 
 por edad, por género, etc. 
 
 Estos estimadores condicionales pueden tomar formas complicadas como las
 predicciones de los modelos de regresión lineal.
+
+```{r, fig.align='center', out.height='250', out.width='400', echo=F}
+knitr::include_graphics("img/groups.jpeg")
+```
+
 ]
-.panel[.panel-name[PATE (Population average treatment effect)]]
 
-Investigadores desean hacer inferencia sobre cierta población de interés en vez de simplemente estudiar una muestra. 
+.panel[.panel-name[PATE]
 
-Realísticamente, los individuos que forman parte de un experimento social o médico 
-no son obtenidos de manera aleatoria o representativa de una población. 
+#### Population Average Treatment Effect
 
-Mientras mejor esté hecha la muestra para hacer inferencias causales, esta se vuelve
-menos representativa de la población conocida. 
+<div style="text-align: justify">
+
+El efecto de tratamiento promedio de tratamiento popular es a menudo una meta en la inferencia causal. Para una población de tamaño N, podemos definir el *PATE* como:
 
 $$\tau_{PATE} = \frac{1}{N} \sum_{i=1}^n(y_i^1 - y_i^0)$$
+En este problema de inferencia, hay dos tipos de datos faltantes:
+
+1. Los valores contractuales faltantes dentro de nuestra muestra
+2. Ambos resultados potenciales para aquellas observaciones que no están en la muestra.
 
 ]
 ]
+
+???
+
+Los investigadores a menudo quieren inferir acerca de alguna población de interés en vez de simplemente estudiar una muestra. Realísticamente, las personas que forman parte de un experimento social o médico no son obtenidos de manera aleatoria o representativa de una población.
+
+Mientras mejor esté hecha la muestra para hacer inferencias causales, esta se vuelve menos representativa de la población conocida.
+
+Para conocer el PATE, nuestra omnisciencia necesitaría extenderse para ver ambos resultados potenciales de la completa población de interés
+
 ---
-En este problema inferencial existen dos tipos de datos faltantes:
 
-* Valores contrafactuales de la muestra
-* Resultados (ambos) de los individuos que no forman parte de la muestra.
+#### Population Average Treatment Effect
+
+<div style="text-align: justify">
 
 Si la muestra de estudio es aleatoria entonces cualquier estimador insesgado de 
 **SATE** será estimador insesgado de **PATE**. Más aún, cuando se ajustan modelos 
 de regresión, el estimador **PATE** dependerá de la distribución asumida de los 
 predictores en la población de interés.
----
+
 Por ejemplo, si el efecto del tratamiento estimado es mayor para las mujeres que 
 para los hombres entonces el estimador **PATE** dependerá de la proporción de 
 hombres y mujeres de la población de interés. 
@@ -141,8 +177,12 @@ hombres y mujeres de la población de interés.
 Si la muestra no es aleatoria, estimar **PATE** requiere un modelo del efecto del 
 tratamiento dados los predictores previos al tratamiento que nos permitan extrapolar
 de unidades experimentales a la población general. 
+
 ---
-## Problemas de autoselección en grupos de tratamiento.
+
+### Problemas de autoselección en grupos de tratamiento.
+
+<div style="text-align: justify">
 
 Aunque se tengan la misma cantidad de hombres y mujeres en ambos
 grupos, los individuos que se encuentran en el grupo de control son más jóvenes que 
@@ -151,15 +191,27 @@ edad se debe tomar en cuenta debido a que la edad también influye en el resulta
 
 Los resultados potenciales encapsulan toda la información necesaria con respecto a lo que necesitamos para que ésta información sea similar en ambos grupos.
 Dado que no podemos ajustar los datos directamente, utilizamos nuestras variables de pre entratamiento como una sustitutos. 
+
+```{r, fig.align='center', out.height='250', out.width='400', echo=F}
+knitr::include_graphics("img/age-groups2.jpeg")
+```
+
 ---
-## Como abordar el desbalance entre los grupos de tratamiento y control
+
+### Como abordar el desbalance entre los grupos de tratamiento y control
+
+<div style="text-align: justify">
 
 Existen enfoque estadísticos que nos ayudan a asegurar el balance entre los grupos 
 de control y tratamiento. 
 
-* Etapa de diseño:  Se utiliza **aleatorización** para asegurar balance entre ambos grupos. Y se utiliza el **bloqueo** para reducir la variación en cualquier desbalance. 
+* **Etapa de diseño:** Se utiliza **aleatorización** para asegurar balance entre ambos grupos. Y se utiliza el **bloqueo** para reducir la variación en cualquier desbalance. 
 
-* Etapa de análisis: Se pueden **ajustar** para que las variables previas al tratamiento corrijan las diferencias entre los dos grupos para reducir sesgos en la estimación del efecto del tratamiento promedio de la muestra. Más aún, se pueden ajustar las diferencias entre la muestra y la población si el objetivo es estimar el efecto del tratamiento promedio de la población.
+* **Etapa de análisis:** Se pueden **ajustar** para que las variables previas al tratamiento corrijan las diferencias entre los dos grupos para reducir sesgos en la estimación. 
+
+```{r, fig.align='center', out.height='250', out.width='400', echo=F}
+knitr::include_graphics("img/random_assign.png")
+```
 
 ---
 class: inverse, center, middle
