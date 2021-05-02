@@ -55,6 +55,78 @@ class: inverse, center, middle
 ## Bases de la inferencia causal
 
 ---
+
+## Bases de inferencia causal
+
+<div style="text-align: justify">
+
+Los efectos causales se conceptualizan como una comparación entre los diferentes resultados potenciales y los resultados que podría haber sucedido en otros escenarios. Esta comparación podría ser entre un estado fáctico, y uno o más estados contrafácticos, incluso podría ser una comparación entre varios contrafácticos.
+
+**Ejemplo:** Tomemos el efecto en el consumo de ácidos grasos omega-3, como una estrategía eficaz para abordar una afeción médica como es la presión arterial sistólica (presión máxima que ejerce el corazón mientras late), en este caso se considera ***presión arterial alta*** niveles de $160mmHG$ o superiores.
+
+```{r, fig.align='center', out.height='220', out.width='450', echo=F}
+knitr::include_graphics("img/8_individuos.png")
+```
+
+???
+Asumimos que los individuos siguen el tratamiento asignado. Al final del periodo se miden las presiones arteriales de los participantes.
+
+---
+
+## Resultados potenciales, contractuales y efectos causales
+
+Resultados potenciales de la presión arterial: 
+
+| $y_{i}^0$                            | $y_{i}^1$                     |
+|--------------------------------------|-------------------------------|
+| <span style="font-size:16px">La persona no tomó ningún suplemento</span> | <span style="font-size:16px">La persona tomó el suplemento</span> |
+
+Para este experimento consideramos los siguientes estados:
+
+| **Estado fáctico**                   | **Estado contrafractual**            |
+|--------------------------------------|--------------------------------------|
+| $y_{i}^1$ <span style="font-size:14px">recibio el tratamiento</span>    | $y_{i}^0$ <span style="font-size:14px">recibio el tratamiento</span> |
+| $y_{i}^0$ <span style="font-size:14px">no recibio el tratamiento</span> | $y_{i}^1$ <span style="font-size:14px">no recibio el tratamiento</span> |
+
+El efecto causal puede expresarse como: 
+
+$$\tau_i = y_{i}^1 − y_{i}^0$$
+
+???
+La diferencia de lo que hubiera ocurrido cuando se toma el tratamiento en comparación cuando no se toma el tratamiento sse llama el efecto del tratamiento y por tanto sería la inferencia causal.
+
+---
+<div style="text-align: justify">
+</br>
+</br>
+Supongamos que un individuo $j^{th}$ antes del tratamiento tiene una presión de $140mmHg$, recibe suplementos, y al termino su medición fue de $y_{j}^1 = 135mmHg$. ¿Este descenso proporciona evidencia suficiente de que los suplementos causan una reducción en la presión arterial? 
+
+## El problema fundamental de la inferencia causal
+
+El problema inherente de la inferencia causal es que nunca podemos observar los resultados potenciales $y_{j}^0$ y $y_{j}^1$ al mismo tiempo. 
+
+## Sustitutos próximos
+
+¿Qué pasaría si tuviéramos la presión arterial de individuo antes del estudio? ¿Podríamos usar eso como un sustituto de su $y_{j}^0?$ 
+
+Comenzamos a plantear escenarios:
+
+- ¿Nos puede ayudar la idea básica detrás de un diseño de estudio antes vs después?
+
+???
+La única forma en que podríamos hacer esta afirmación sería si supiéramos que si Audrey no hubiera recibido los suplementos, entonces su presión arterial habría sido más alta, o hubiera permanecido igual. Sin, embargo esto no lo podemos saber.
+
+- El problema fundamental de la inferencia causal
+No podemos observar la presión sanguínea que habría resultado tanto si Audrey hubiera tomado los suplementos como si no, por lo que el efecto causal es imposible de medir directamente. Esto se conoce comúnmente como el problema fundamental de la inferencia causal.
+
+Si los tratamientos se asignaran al azar, podemos estimar un efecto causal promedio, pero no nos informará sobre el efecto en una persona determinada. Estos esfuerzos de definir y estimar efectos causales promedio, solo podrían aplicar directamente a los individuos si estamos dispuestos a asumir que los efectos son constantes entre las personas. Una razón por la que puede ser importante incluir interacciones de tratamiento en modelos de regresión causal es porque esta es una forma de estimar la variación en los efectos.
+
+- Sustituos proximos
+El problema es que la presión arterial de Audrey antes de que comience el estudio, $y_{j}^{before}$, no es necesariamente un reflejo éxacto de cuál sería su presión arterial sin los suplementos un año después, haciendo $y_{j}^{before}$ lo que la convierte en un pobre sustituto de $y_{j}^{0}$.
+
+Las cosas se complicarían aún más si el estudio se implementara de modo que Audrey recibiera los complementos en el primer año pero no en el segundo. Si los suplementos resultaran tener un efecto de larga duración, los resultados del segundo año se verían afectados por el tratamiento del primer año. Podríamos intentar evitar esta contaminación permitiendo un período de depuración(limpieza) entre los segmentos del estudio (en nuestro ejemplo para intentar asegurarnos de que el cuerpo ya no se vea afectado por los suplementos), pero este diseño todavía adolece del defecto de intentar implícitamente sustituir mediciones de un período como estimaciones de resultados potenciales de otro. 
+
+---
 class: inverse, center, middle
 
 # Capítulo 18.2
@@ -74,6 +146,7 @@ En experimentos en la cuales solo un tratamiento es aplicado a cada individuo, n
 ```{r, fig.align='center', out.height='300', out.width='600', echo=F}
 knitr::include_graphics("img/red_and_blue_pill.jpeg")
 ```
+
 
 ---
 ## ¿Qué hacemos?
