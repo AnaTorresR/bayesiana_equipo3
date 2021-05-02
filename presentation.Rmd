@@ -60,7 +60,7 @@ class: inverse, center, middle
 
 <div style="text-align: justify">
 
-Los efectos causales se conceptualizan como una comparación entre los diferentes resultados potenciales y los resultados que podría haber sucedido en otros escenarios. Esta comparación podría ser entre un estado fáctico, y uno o más estados contrafácticos, incluso podría ser una comparación entre varios contrafácticos.
+Los efectos causales se conceptualizan como una comparación entre los diferentes resultados potenciales y los resultados que podría haber sucedido en otros escenarios. (Estado fáctico / Estados contrafácticos)
 
 **Ejemplo:** Tomemos el efecto en el consumo de ácidos grasos omega-3, como una estrategía eficaz para abordar una afeción médica como es la presión arterial sistólica (presión máxima que ejerce el corazón mientras late), en este caso se considera ***presión arterial alta*** niveles de $160mmHG$ o superiores.
 
