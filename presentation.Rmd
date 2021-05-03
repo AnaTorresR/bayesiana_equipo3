@@ -303,13 +303,54 @@ knitr::include_graphics("img/random_assign.png")
 ---
 class: inverse, center, middle
 
-
-
 # Capítulo 18.3
 
 ## Experimentos Aleatorizados
 
 ---
+
+</br>
+
+## Experimentos Aleatorizados
+
+<div style="text-align: justify">
+
+La asignación aleatoria de unidades a los grupos de tratamiento y control asegura que no haya diferencias en la esperanza en la distribución de los resultados potenciales entre los grupos. Es posible asignar aleatoriamente unidades a los tratamientos (o tratamientos a las unidades) lanzando una moneda, sacando nombres de un sombrero o, de manera más general, asignando números aleatorios a las unidades. Hoy en día nos apoyamos de software para estas asignaciones aleatoria. 
+
+Ejemplo:
+
+```{r}
+sample(c(0,0,0,0,1,1,1,1), 8)
+```
+
+---
+
+### Experimentos completamente aleatorizados 
+
+<div style="text-align: justify">
+
+En un experimento completamente aleatorizado, la probabilidad de ser asignado al tratamiento es la misma para cada unidad de la muestra.
+
+</br>
+
+**Resultado idealizado de un experimento completamente aleatorizado.** 
+
+En la tabla anterior la asignación de tratamiento y el resultado observado reflejan una asignación aleatoria idealizada. Caracterizamos la asignación aleatoria como idealizada porque parece haber conducido a distribuciones perfectamente equilibradas de resultados potenciales. En este caso, dado el equilibrio perfecto entre los grupos, tiene sentido que una simple diferencia en medias recupere exactamente el verdadero efecto del tratamiento de −7,5. De manera equivalente, el efecto causal promedio del tratamiento corresponde al coeficienteτ en la regresión, $y_i = \alpha + \tau z_i + error_i$, por lo que podemos estimar el efecto del tratamiento usando una regresión del resultado en la asignación del tratamiento.
+
+---
+
+**Un resultado menos idealizado y aleatorizado.**
+
+<div style="text-align: justify">
+
+Consideremos la siguiente tabla. En este caso, la asignación aleatoria condujo a un desequilibrio entre los grupos de tratamiento y control, con los participantes más jóvenes con más probabilidades de haber recibido tratamiento. Si observamos las $y_i^0$'s notamos que incluso si el tratamiento no tuviera ningún efecto, veríamos una gran diferencia entre los grupos de tratamiento y control en el resultado. Para esta asignación de tratamiento en particular, la diferencia simple entre el tratamiento promedio y las mediciones de control llega a -17.5, que esta bastante alejado del efecto de tratamiento promedio de la muestra real de −7,5. La aleatorización garantiza el equilibrio en promedio, pero no en una muestra cualquiera, y el desequilibrio puede ser grande cuando el tamaño de la muestra es pequeño.
+
+```{r, fig.align='center', out.height='250', out.width='800', echo=F}
+knitr::include_graphics("img/experimentos_aleatorios.png")
+```
+
+---
+
 class: inverse, center, middle
 
 # Capítulo 18.4
