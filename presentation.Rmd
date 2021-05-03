@@ -69,6 +69,10 @@ knitr::include_graphics("img/8_individuos.png")
 ```
 
 ???
+El efecto causal se conceptualiza como una comparación entre los resultados potenciales y los resultados que podrían haber sucedido en otros escenarios, en otras palabras nuestros estado fáctico y estados contrafacticos.
+
+Para definir estos conceptos tomomeos el efecto de ..
+
 Asumimos que los individuos siguen el tratamiento asignado. Al final del periodo se miden las presiones arteriales de los participantes.
 
 ---
@@ -93,7 +97,11 @@ El efecto causal puede expresarse como:
 $$\tau_i = y_{i}^1 − y_{i}^0$$
 
 ???
-La diferencia de lo que hubiera ocurrido cuando se toma el tratamiento en comparación cuando no se toma el tratamiento sse llama el efecto del tratamiento y por tanto sería la inferencia causal.
+En este ejemplo nuestros resultados potenciales para la presión arterial es el resultado de la misma cuando se consume el suplemento y su resultado de cuando no se consumio.
+
+Para este experimento consideramos los siguientes estados: El estado fáctico y el estado contrafractual, donde si tomamos a un individuo que consumio el tratamieno este seria su estado fáctico y su estado contrafactico es si no lo hubiera tomado.
+
+Por tanto el efecto causal puede expresarse como: La diferencia de lo que hubiera ocurrido cuando se toma el tratamiento en comparación de cuando no se toma el tratamiento a esto se le conoce como el efecto del tratamiento.
 
 ---
 <div style="text-align: justify">
@@ -114,17 +122,17 @@ Comenzamos a plantear escenarios:
 - ¿Nos puede ayudar la idea básica detrás de un diseño de estudio antes vs después?
 
 ???
-La única forma en que podríamos hacer esta afirmación sería si supiéramos que si Audrey no hubiera recibido los suplementos, entonces su presión arterial habría sido más alta, o hubiera permanecido igual. Sin, embargo esto no lo podemos saber.
+Supongamos que un individuo $j^{th}$ antes del tratamiento tiene una presión de $140mmHg$, recibe suplementos, y al termino su medición fue de $y_{j}^1 = 135mmHg$. Esto nos lleva a preguntarnos si ¿Este descenso proporciona evidencia suficiente de que los suplementos causan una reducción en la presión arterial? 
 
-- El problema fundamental de la inferencia causal
-No podemos observar la presión sanguínea que habría resultado tanto si Audrey hubiera tomado los suplementos como si no, por lo que el efecto causal es imposible de medir directamente. Esto se conoce comúnmente como el problema fundamental de la inferencia causal.
+Lo que nos hace pensar en escenarios donde que hubiera pasado si no hubiera tomado el suplemento y su presión hubiera bajado, o bien hubiera tomado el suplemeno y su presión hubiera subido.
 
-Si los tratamientos se asignaran al azar, podemos estimar un efecto causal promedio, pero no nos informará sobre el efecto en una persona determinada. Estos esfuerzos de definir y estimar efectos causales promedio, solo podrían aplicar directamente a los individuos si estamos dispuestos a asumir que los efectos son constantes entre las personas. Una razón por la que puede ser importante incluir interacciones de tratamiento en modelos de regresión causal es porque esta es una forma de estimar la variación en los efectos.
+Lo que nos lleva al problema inherente de la inferencia causal donde nunca podemos observar los resultados potenciales al mismo tiempo. 
 
-- Sustituos proximos
-El problema es que la presión arterial de Audrey antes de que comience el estudio, $y_{j}^{before}$, no es necesariamente un reflejo éxacto de cuál sería su presión arterial sin los suplementos un año después, haciendo $y_{j}^{before}$ lo que la convierte en un pobre sustituto de $y_{j}^{0}$.
+Esto nos lleva a buscar sustitutos de los resultados que no pueden ser observados, por ejemplo: ¿Qué pasaría si tuviéramos la presión arterial de individuo antes del estudio? ¿Podríamos usar eso como un sustituto?
 
-Las cosas se complicarían aún más si el estudio se implementara de modo que Audrey recibiera los complementos en el primer año pero no en el segundo. Si los suplementos resultaran tener un efecto de larga duración, los resultados del segundo año se verían afectados por el tratamiento del primer año. Podríamos intentar evitar esta contaminación permitiendo un período de depuración(limpieza) entre los segmentos del estudio (en nuestro ejemplo para intentar asegurarnos de que el cuerpo ya no se vea afectado por los suplementos), pero este diseño todavía adolece del defecto de intentar implícitamente sustituir mediciones de un período como estimaciones de resultados potenciales de otro. 
+Comenzamos a plantearnos escenarios, y podemos usar un diseño de estudio pre/post.
+
+Si tomamos la presión inicial, como el resultado de la presión sin recibir tratamiento sesgaría el reultado, ya que en el periodo de un año el individuo pudiera haber cambiado sus hábitos alimenticios, podría haber perdido el trabajo y no alimentarse correctamente, o haber tenido una enfermedad. En resumen pueden existir factores inherentes al suplemento que afecten el resultado final que se quisiera sustituir.
 
 ---
 class: inverse, center, middle
@@ -310,6 +318,45 @@ class: inverse, center, middle
 ## Experimentos Aleatorizados
 
 ---
+
+## Experimentos Aleatorizados
+
+<div style="text-align: justify">
+
+La asignación aleatoria de unidades a los grupos de tratamiento y control asegura que no haya diferencias en la esperanza en la distribución de los resultados potenciales entre los grupos. Es posible asignar aleatoriamente unidades a los tratamientos (o tratamientos a las unidades) lanzando una moneda, sacando nombres de un sombrero o, de manera más general, asignando números aleatorios a las unidades. Hoy en día nos apoyamos de software para estas asignaciones aleatoria. 
+
+Ejemplo:
+
+```{r}
+sample(c(0,0,0,0,1,1,1,1), 8)
+```
+---
+
+## Experimentos completamente aleatorizados 
+
+<div style="text-align: justify">
+
+En un experimento completamente aleatorizado, la probabilidad de ser asignado al tratamiento es la misma para cada unidad de la muestra.
+
+
+**Resultado idealizado de un experimento completamente aleatorizado.**
+
+En la tabla anterior la asignación de tratamiento y el resultado observado reflejan una asignación aleatoria idealizada. Caracterizamos la asignación aleatoria como idealizada porque parece haber conducido a distribuciones perfectamente equilibradas de resultados potenciales. En este caso, dado el equilibrio perfecto entre los grupos, tiene sentido que una simple diferencia en medias recupere exactamente el verdadero efecto del tratamiento de −7,5. De manera equivalente, el efecto causal promedio del tratamiento corresponde al coeficiente $\tau$ en la regresión, $y_i = \alpha + \tau z_i + error_i$, por lo que podemos estimar el efecto del tratamiento usando una regresión del resultado en la asignación del tratamiento.
+
+---
+
+**Un resultado menos idealizado y aleatorizado.**
+
+<div style="text-align: justify">
+
+Consideremos la siguiente tabla. En este caso, la asignación aleatoria condujo a un desequilibrio entre los grupos de tratamiento y control, con los participantes más jóvenes con más probabilidades de haber recibido tratamiento. Si observamos las $y_i^0$'s notamos que incluso si el tratamiento no tuviera ningún efecto, veríamos una gran diferencia entre los grupos de tratamiento y control en el resultado. Para esta asignación de tratamiento en particular, la diferencia simple entre el tratamiento promedio y las mediciones de control llega a $-17.5$, que esta bastante alejado del efecto de tratamiento promedio de la muestra real de $−7,5$. La aleatorización garantiza el equilibrio en promedio, pero no en una muestra cualquiera, y el desequilibrio puede ser grande cuando el tamaño de la muestra es pequeño.
+
+
+```{r, fig.align='center', out.height='250', out.width='800', echo=F}
+knitr::include_graphics("img/experimentos_aleatorios.jpeg")
+```
+
+---
 class: inverse, center, middle
 
 # Capítulo 18.4
@@ -318,7 +365,31 @@ class: inverse, center, middle
 
 ---
 
+* Realizamos un número infinito de muestras de la población, asignamos aleatoriamente el tratamiento y calculamos su estimación.
 
+* Si una estimación es insesgada entonces el promedio de todas las estimaciones es igual al efecto promedio del tratamiento en la muestra.
+
+* Una estimación insesgada no garantiza que la estimación para una muestra aleatoria sea cercana al valor real, sobretodo cuando la muestra es pequeña.
+
+```{r, fig.align='center', out.height='350', out.width='800', echo=F}
+knitr::include_graphics("img/Eficiente e insesgado.jpeg")
+```
+
+---
+
+* Se puede mejorar la estimación del tratamiento mediante diseños muestrales que disminuyan muestras no balanceadas.
+
+* El aspecto más importante en el diseño es **recolectar información pre tratamiento** que pueda se usada para realizar muestras balanceada.
+
+```{r, fig.align='center', out.height='350', out.width='800', echo=F}
+knitr::include_graphics("img/efecto promedio.jpeg")
+```
+
+---
+
+class: inverse, center, middle
+
+#¡Gracias!
 
 
 
