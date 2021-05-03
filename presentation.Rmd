@@ -311,11 +311,25 @@ knitr::include_graphics("img/random_assign.png")
 ---
 class: inverse, center, middle
 
-
-
 # Capítulo 18.3
 
 ## Experimentos Aleatorizados
+
+---
+
+</br>
+
+## Experimentos Aleatorizados
+
+<div style="text-align: justify">
+
+La asignación aleatoria de unidades a los grupos de tratamiento y control asegura que no haya diferencias en la esperanza en la distribución de los resultados potenciales entre los grupos. Es posible asignar aleatoriamente unidades a los tratamientos (o tratamientos a las unidades) lanzando una moneda, sacando nombres de un sombrero o, de manera más general, asignando números aleatorios a las unidades. Hoy en día nos apoyamos de software para estas asignaciones aleatoria. 
+
+Ejemplo:
+
+```{r}
+sample(c(0,0,0,0,1,1,1,1), 8)
+```
 
 ---
 
