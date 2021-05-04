@@ -334,7 +334,7 @@ sample(c(0,0,0,0,1,1,1,1), 8)
 ```
 
 ```
-## [1] 1 1 0 1 0 1 0 0
+## [1] 0 1 0 1 0 0 1 1
 ```
 
 ???
@@ -402,23 +402,22 @@ En promedio, la aleatorización garantiza el equilibrio pero no en una muestra c
 class: inverse, center, middle
 
 # Capítulo 18.4
-
-## Distribuciones muestrales, distribuciones aleatorizadas, y sesgo en la estimación
-
+### Distribuciones muestrales, distribuciones aleatorizadas, y sesgo en la estimación
 ---
 
 * Realizamos un número infinito de muestras de la población, asignamos aleatoriamente el tratamiento y calculamos su estimación.
-
 * Si una estimación es insesgada entonces el promedio de todas las estimaciones es igual al efecto promedio del tratamiento en la muestra.
-
 * Una estimación insesgada no garantiza que la estimación para una muestra aleatoria sea cercana al valor real, sobretodo cuando la muestra es pequeña.
 
-&lt;img src="img/Eficiente e insesgado.jpeg" width="800" height="350" style="display: block; margin: auto;" /&gt;
-
+.pull-left[
+&lt;img src="img/Eficiente e insesgado1.jpeg" width="500" height="350" style="display: block; margin: auto;" /&gt;
+]
+.pull-right[
+&lt;img src="img/Dist_sate.png" width="400" height="300" style="display: block; margin: auto;" /&gt;
+]
 ---
 
 * Se puede mejorar la estimación del tratamiento mediante diseños muestrales que disminuyan muestras no balanceadas.
-
 * El aspecto más importante en el diseño es **recolectar información pre tratamiento** que pueda se usada para realizar muestras balanceada.
 
 &lt;img src="img/efecto promedio.jpeg" width="800" height="350" style="display: block; margin: auto;" /&gt;
