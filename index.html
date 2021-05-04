@@ -1,50 +1,81 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Modelos Lineales Generalizados</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Iván Oswaldo Salgado Velázquez" />
+    <meta name="author" content="Aide Jazmín González Cruz" />
+    <meta name="author" content="Ana Eréndira Torres Ramírez" />
+    <meta name="author" content="Victor Erasto" />
+    <meta name="author" content="Oscar Arturo Bringas López" />
+    <script src="libs/header-attrs-2.7/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+    <script src="libs/js-cookie-3.0.0/js.cookie.js"></script>
+    <script src="libs/peerjs-1.3.1/peerjs.min.js"></script>
+    <script src="libs/tiny.toast-1.0.0/toast.min.js"></script>
+    <link href="libs/xaringanExtra-broadcast-0.2.6/broadcast.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-broadcast-0.2.6/broadcast.js"></script>
+    <link href="libs/panelset-0.2.6/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset-0.2.6/panelset.js"></script>
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Modelos Lineales Generalizados
+## ⚔ Inferencia causal y experimentos aleatorios. ⚔<br/>
+### Iván Oswaldo Salgado Velázquez
+### Aide Jazmín González Cruz
+### Ana Eréndira Torres Ramírez
+### Victor Erasto
+### Oscar Arturo Bringas López
+### ITAM
+
 ---
-title: "Modelos Lineales Generalizados"
-subtitle: "⚔ Inferencia causal y experimentos aleatorios. ⚔<br/>"
-author: 
-  - Iván Oswaldo Salgado Velázquez
-  - Aide Jazmín González Cruz
-  - Ana Eréndira Torres Ramírez
-  - Victor Erasto
-  - Oscar Arturo Bringas López
-institute: "ITAM"
-output:
-  xaringan::moon_reader:
-    lib_dir: libs
-    nature:
-      highlightStyle: github
-      highlightLines: true
-      countIncrementalSlides: false
----
+
 
 class: center, middle
 
-<div style="text-align: justify">
+&lt;div style="text-align: justify"&gt;
 
-```{r setup, echo=FALSE}
-#options(htmltools.dir.version = FALSE)
-
-library(xaringanExtra)
-
-
-xaringanExtra::use_logo(
-  image_url = "http://escolar.itam.mx/centro_tesis/img/logo-ITAM.png",
-  position = xaringanExtra::css_position(top = "1em", right = "1em")
-)
-
-xaringanExtra::use_broadcast()
-
-xaringanExtra::use_panelset()
-xaringanExtra::style_panelset_tabs(
-  active_foreground = "#061b94",
-  hover_foreground = "#000000",
-  font_family = "Roboto"
-)
-```
+<div>
+<style type="text/css">.xaringan-extra-logo {
+width: 110px;
+height: 128px;
+z-index: 0;
+background-image: url(http://escolar.itam.mx/centro_tesis/img/logo-ITAM.png);
+background-size: contain;
+background-repeat: no-repeat;
+position: absolute;
+top:1em;right:1em;
+}
+</style>
+<script>(function () {
+  let tries = 0
+  function addLogo () {
+    if (typeof slideshow === 'undefined') {
+      tries += 1
+      if (tries < 10) {
+        setTimeout(addLogo, 100)
+      }
+    } else {
+      document.querySelectorAll('.remark-slide-content:not(.title-slide):not(.inverse):not(.hide_logo)')
+        .forEach(function (slide) {
+          const logo = document.createElement('div')
+          logo.classList = 'xaringan-extra-logo'
+          logo.href = null
+          slide.appendChild(logo)
+        })
+    }
+  }
+  document.addEventListener('DOMContentLoaded', addLogo)
+})()</script>
+</div><style>.panelset{--panel-tab-active-foreground: #061b94;--panel-tab-hover-foreground: #000000;--panel-tab-font-family: Roboto;}</style>
 
 # Objetivo
 
-</br>
+&lt;/br&gt;
 
 El objetivo de este capítulo es conocer las principales definiciones y problemáticas asociados a los diseños de experimentos que pretenden inferir el efecto asociado a un tratamiento o exposición aplicado a un individuo. 
 
@@ -59,19 +90,17 @@ class: inverse, center, middle
 
 ## Bases de inferencia causal
 
-<div style="text-align: justify">
+&lt;div style="text-align: justify"&gt;
 
 Los efectos causales son una comparación entre los resultados potenciales y los resultados que podría haber sucedido en otros escenarios.
 
-</br>
+&lt;/br&gt;
 
 **Ejemplo:** Medir el efecto en el consumo de ácidos grasos omega-3, como estrategía en la reducción de presión arterial sistólica (presión máxima que ejerce el corazón mientras late).
 
-</br>
+&lt;/br&gt;
 
-```{r, fig.align='center', out.height='220', out.width='450', echo=F}
-knitr::include_graphics("img/8_individuos.png")
-```
+&lt;img src="img/8_individuos.png" width="450" height="220" style="display: block; margin: auto;" /&gt;
 
 ???
 El efecto causal se conceptualiza como una comparación entre los resultados potenciales y los resultados que podrían haber sucedido en otros escenarios, en otras palabras nuestros estado fáctico y estados contrafacticos.
@@ -86,20 +115,20 @@ Asumimos que los individuos siguen el tratamiento asignado. Al final del periodo
 
 Resultados potenciales de la presión arterial: 
 
-| $y_{i}^0$                            | $y_{i}^1$                     |
+| `\(y_{i}^0\)`                            | `\(y_{i}^1\)`                     |
 |--------------------------------------|-------------------------------|
-| <span style="font-size:16px">La persona no tomó ningún suplemento</span> | <span style="font-size:16px">La persona tomó el suplemento</span> |
+| &lt;span style="font-size:16px"&gt;La persona no tomó ningún suplemento&lt;/span&gt; | &lt;span style="font-size:16px"&gt;La persona tomó el suplemento&lt;/span&gt; |
 
 Para este experimento consideramos los siguientes estados:
 
 | **Estado fáctico**                   | **Estado contrafractual**            |
 |--------------------------------------|--------------------------------------|
-| $y_{i}^1$ <span style="font-size:14px">recibio el tratamiento</span>    | $y_{i}^0$ <span style="font-size:14px">recibio el tratamiento</span> |
-| $y_{i}^0$ <span style="font-size:14px">no recibio el tratamiento</span> | $y_{i}^1$ <span style="font-size:14px">no recibio el tratamiento</span> |
+| `\(y_{i}^1\)` &lt;span style="font-size:14px"&gt;recibio el tratamiento&lt;/span&gt;    | `\(y_{i}^0\)` &lt;span style="font-size:14px"&gt;recibio el tratamiento&lt;/span&gt; |
+| `\(y_{i}^0\)` &lt;span style="font-size:14px"&gt;no recibio el tratamiento&lt;/span&gt; | `\(y_{i}^1\)` &lt;span style="font-size:14px"&gt;no recibio el tratamiento&lt;/span&gt; |
 
 El efecto causal puede expresarse como: 
 
-$$\tau_i = y_{i}^1 − y_{i}^0$$
+`$$\tau_i = y_{i}^1 − y_{i}^0$$`
 
 ???
 En este ejemplo nuestros resultados potenciales para la presión arterial es el resultado de la misma cuando se consume el suplemento y su resultado de cuando no se consumio.
@@ -109,22 +138,22 @@ Para este experimento consideramos los siguientes estados: El estado fáctico y 
 Por tanto el efecto causal puede expresarse como: La diferencia de lo que hubiera ocurrido cuando se toma el tratamiento en comparación de cuando no se toma el tratamiento a esto se le conoce como el efecto del tratamiento.
 
 ---
-<div style="text-align: justify">
+&lt;div style="text-align: justify"&gt;
 
 ## El problema fundamental de la inferencia causal
 
-El problema inherente de la inferencia causal es que nunca podemos observar los resultados potenciales $y_{j}^0$ y $y_{j}^1$ al mismo tiempo. 
+El problema inherente de la inferencia causal es que nunca podemos observar los resultados potenciales `\(y_{j}^0\)` y `\(y_{j}^1\)` al mismo tiempo. 
 
 ## Sustitutos próximos
 
 - ¿Qué pasaría si tuviéramos la presión arterial de individuo antes del estudio? 
 
-- ¿Podríamos usar eso como un sustituto de su $y_{j}^0?$ 
+- ¿Podríamos usar eso como un sustituto de su `\(y_{j}^0?\)` 
 
-- ¿Una solución es podría se el aplicar un diseño de estudio antes $vs$ después?
+- ¿Una solución es podría se el aplicar un diseño de estudio antes `\(vs\)` después?
 
 ???
-Supongamos que un individuo $j^{th}$ antes del tratamiento tiene una presión de $140mmHg$, recibe suplementos, y al termino su medición fue de $y_{j}^1 = 135mmHg$. Esto nos lleva a preguntarnos si ¿Este descenso proporciona evidencia suficiente de que los suplementos causan una reducción en la presión arterial? 
+Supongamos que un individuo `\(j^{th}\)` antes del tratamiento tiene una presión de `\(140mmHg\)`, recibe suplementos, y al termino su medición fue de `\(y_{j}^1 = 135mmHg\)`. Esto nos lleva a preguntarnos si ¿Este descenso proporciona evidencia suficiente de que los suplementos causan una reducción en la presión arterial? 
 
 Lo que nos hace pensar en escenarios donde que hubiera pasado si no hubiera tomado el suplemento y su presión hubiera bajado, o bien hubiera tomado el suplemeno y su presión hubiera subido.
 
@@ -147,43 +176,39 @@ class: inverse, center, middle
 
 ## Efectos causales promedio
 
-<div style="text-align: justify">
+&lt;div style="text-align: justify"&gt;
 
 El contra-factual o resultado potencial añade claridad al significado de efectos causales, pero también resalta el desafío inherente en su estimación. 
 
-En experimentos en la cuales solo un tratamiento es aplicado a cada individuo, no será posible estimar el efecto causal a **nivel individuo**, $y^1_i − y^0_i$.
+En experimentos en la cuales solo un tratamiento es aplicado a cada individuo, no será posible estimar el efecto causal a **nivel individuo**, `\(y^1_i − y^0_i\)`.
 
-```{r, fig.align='center', out.height='300', out.width='600', echo=F}
-knitr::include_graphics("img/red_and_blue_pill.jpeg")
-```
+&lt;img src="img/red_and_blue_pill.jpeg" width="600" height="300" style="display: block; margin: auto;" /&gt;
 
 
 ---
 ## ¿Qué hacemos?
 
 Supongamos que los individuos pueden aplicar a ambos estudios tratamiento y 
-control, es decir, se tiene $y^1_i, y^0_i$ para cada individuo. 
+control, es decir, se tiene `\(y^1_i, y^0_i\)` para cada individuo. 
 
 Dados estos dos resultados potenciales se puede obtener el efecto del tratamiento 
 de cada individuo.
 
-$$\tau_i = y^1_i − y^0_i$$
+`$$\tau_i = y^1_i − y^0_i$$`
 **Por ejemplo:**
 
-```{r, fig.align='center', out.height='150', out.width='500', echo=F}
-knitr::include_graphics("img/ejemplo.png")
-```
+&lt;img src="img/ejemplo.png" width="500" height="150" style="display: block; margin: auto;" /&gt;
 
 ???
 
 Consideremos de nuevo nuestra hipótesis de 8 personas en el estudio. Supongan que en la figura mostrada pudieron haberse visto si fuéramos capaces de aplicar tanto el tratamiento como el control a cada persona. 
 
-Bajo este estado de omnisciencia, podríamos ver tanto $y^1$ y $y^0$ para cada participante en el estudio. Dados todos estos posibles resultados, podemos directamente calcular el efecto del tratamiento para cada persona:
+Bajo este estado de omnisciencia, podríamos ver tanto `\(y^1\)` y `\(y^0\)` para cada participante en el estudio. Dados todos estos posibles resultados, podemos directamente calcular el efecto del tratamiento para cada persona:
 
 Existen diferencias entre los grupos de tratamiento y de control por lo que se 
 deben de realizar ciertos ajustes para estimar el efecto causal. 
  
-El efecto causal $\tau_i$ puede variar de persona en persona; es por eso que el
+El efecto causal `\(\tau_i\)` puede variar de persona en persona; es por eso que el
 cálculo de éste dependerá de en qué grupo de personas se está promediando este
 efecto.
 
@@ -196,12 +221,10 @@ efecto.
 
 #### Sample Average Treatment Effect
 
-Este estimado, llamado **Efecto promedio de tratamiento muestra** o SATE, puede ser calculado al promediar todos los $y_i^1$ y sustraer el promedio de los $y^0_i$ en al muestra. Equivalentemente y quizá más intuitivamente, podemos simplemente promediar los efectos causales a nivel individual.
+Este estimado, llamado **Efecto promedio de tratamiento muestra** o SATE, puede ser calculado al promediar todos los `\(y_i^1\)` y sustraer el promedio de los `\(y^0_i\)` en al muestra. Equivalentemente y quizá más intuitivamente, podemos simplemente promediar los efectos causales a nivel individual.
 
-$$\tau_{SATE}=\frac{1}{n} \sum_{i=1}^n(y_i^1 - y_i^0)$$
-```{r, fig.align='center', out.height='150', out.width='300', echo=F}
-knitr::include_graphics("img/sample.png")
-```
+`$$\tau_{SATE}=\frac{1}{n} \sum_{i=1}^n(y_i^1 - y_i^0)$$`
+&lt;img src="img/sample.png" width="300" height="150" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -215,9 +238,7 @@ por edad, por género, etc.
 Estos estimadores condicionales pueden tomar formas complicadas como las
 predicciones de los modelos de regresión lineal.
 
-```{r, fig.align='center', out.height='250', out.width='400', echo=F}
-knitr::include_graphics("img/groups.jpeg")
-```
+&lt;img src="img/groups.jpeg" width="400" height="250" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -225,11 +246,11 @@ knitr::include_graphics("img/groups.jpeg")
 
 #### Population Average Treatment Effect
 
-<div style="text-align: justify">
+&lt;div style="text-align: justify"&gt;
 
 El efecto de tratamiento promedio de tratamiento popular es a menudo una meta en la inferencia causal. Para una población de tamaño N, podemos definir el *PATE* como:
 
-$$\tau_{PATE} = \frac{1}{N} \sum_{i=1}^N(y_i^1 - y_i^0)$$
+`$$\tau_{PATE} = \frac{1}{N} \sum_{i=1}^N(y_i^1 - y_i^0)$$`
 En este problema de inferencia, hay dos tipos de datos faltantes:
 
 1. Los valores contractuales faltantes dentro de nuestra muestra
@@ -255,16 +276,14 @@ predictores en la población de interés.
 
 ### Problemas de autoselección en grupos de tratamiento.
 
-<div style="text-align: justify">
+&lt;div style="text-align: justify"&gt;
 
 El punto inicial es la comparación de los grupos de tratamiento y control, y podemos correr en problemas si estos dos grupos no son suficientemente similares o balanceados. En el ejemplo propuesto, vemos que la gente que recibió el tratamiento fueron en promedio mayores que los del grupo de control.
 
 Los resultados potenciales encapsulan toda la información necesaria con respecto a lo que necesitamos para que ésta información sea similar en ambos grupos.
 Dado que no podemos ajustar los datos directamente, utilizamos nuestras variables de pre-tratamiento como sustitutos. 
 
-```{r, fig.align='center', out.height='250', out.width='400', echo=F}
-knitr::include_graphics("img/age-groups2.jpeg")
-```
+&lt;img src="img/age-groups2.jpeg" width="400" height="250" style="display: block; margin: auto;" /&gt;
 
 ???
 
@@ -279,7 +298,7 @@ edad se debe tomar en cuenta debido a que la edad también influye en el resulta
 
 ### Como abordar el desbalance entre los grupos de tratamiento y control
 
-<div style="text-align: justify">
+&lt;div style="text-align: justify"&gt;
 
 Existen enfoque estadísticos que nos ayudan a asegurar el balance entre los grupos 
 de control y tratamiento. 
@@ -288,9 +307,7 @@ de control y tratamiento.
 
 * **Etapa de análisis:** Se pueden **ajustar** para que las variables previas al tratamiento corrijan las diferencias entre los dos grupos para reducir sesgos en la estimación. 
 
-```{r, fig.align='center', out.height='250', out.width='400', echo=F}
-knitr::include_graphics("img/random_assign.png")
-```
+&lt;img src="img/random_assign.png" width="400" height="250" style="display: block; margin: auto;" /&gt;
 
 ---
 class: inverse, center, middle
@@ -301,18 +318,23 @@ class: inverse, center, middle
 
 ---
 
-</br>
+&lt;/br&gt;
 
 ## Experimentos Aleatorizados
 
-<div style="text-align: justify">
+&lt;div style="text-align: justify"&gt;
 
 La asignación aleatoria de unidades a los grupos de tratamiento y control asegura que no haya diferencias en la esperanza en la distribución de los resultados potenciales entre los grupos. Es posible asignar aleatoriamente unidades a los tratamientos (o tratamientos a las unidades).
 
 Ejemplo:
 
-```{r}
+
+```r
 sample(c(0,0,0,0,1,1,1,1), 8)
+```
+
+```
+## [1] 0 1 0 1 0 0 1 1
 ```
 
 ???
@@ -322,23 +344,23 @@ Asignamos aleaotriamente unidades a los grupos de tratamiento y de control para 
 Lanzando una moneda, sacando nombres de un sombrero o, de manera más general, asignando números aleatorios a las unidades. Hoy en día nos apoyamos de software para estas asignaciones aleatoria. 
 ---
 
-</br>
+&lt;/br&gt;
 
-</br>
+&lt;/br&gt;
 
 **Experimentos completamente aleatorizados**
 
-<div style="text-align: justify">
+&lt;div style="text-align: justify"&gt;
 
 En un experimento completamente aleatorizado, la probabilidad de ser asignado al tratamiento es la misma para cada unidad de la muestra.
 
-</br>
+&lt;/br&gt;
 
 **Resultado idealizado de un experimento completamente aleatorizado.**
 
 Caracterizamos la asignación aleatoria como idealizada porque parece haber conducido a distribuciones perfectamente equilibradas de resultados potenciales. 
 
-El efecto causal promedio del tratamiento corresponde al coeficiente $\tau$ en la regresión, $y_i = \alpha + \tau z_i + error_i$, por lo que podemos estimar el efecto del tratamiento usando una regresión del resultado en la asignación del tratamiento.
+El efecto causal promedio del tratamiento corresponde al coeficiente `\(\tau\)` en la regresión, `\(y_i = \alpha + \tau z_i + error_i\)`, por lo que podemos estimar el efecto del tratamiento usando una regresión del resultado en la asignación del tratamiento.
 
 ???
 
@@ -356,17 +378,15 @@ Segundo párrafo.
 
 **Un resultado aleatorizado no ideal.**
 
-<div style="text-align: justify">
+&lt;div style="text-align: justify"&gt;
 
-Si observamos las $y_i^0$'s notamos que incluso si el tratamiento no tuviera ningún efecto, veríamos una gran diferencia entre los grupos de tratamiento y control en el resultado.
+Si observamos las `\(y_i^0\)`'s notamos que incluso si el tratamiento no tuviera ningún efecto, veríamos una gran diferencia entre los grupos de tratamiento y control en el resultado.
 
 En promedio, la aleatorización garantiza el equilibrio pero no en una muestra cualquiera mientras que el desequilibrio puede ser grande cuando el tamaño de la muestra es pequeño.
 
 
 
-```{r, fig.align='center', out.height='250', out.width='800', echo=F}
-knitr::include_graphics("img/experimentos_aleatorios.jpeg")
-```
+&lt;img src="img/experimentos_aleatorios.jpeg" width="800" height="250" style="display: block; margin: auto;" /&gt;
 
 ???
 
@@ -390,23 +410,17 @@ class: inverse, center, middle
 * Una estimación insesgada no garantiza que la estimación para una muestra aleatoria sea cercana al valor real, sobretodo cuando la muestra es pequeña.
 
 .pull-left[
-```{r, fig.align='center', out.height='350', out.width='500', echo=F}
-knitr::include_graphics("img/Eficiente e insesgado1.jpeg")
-```
+&lt;img src="img/Eficiente e insesgado1.jpeg" width="500" height="350" style="display: block; margin: auto;" /&gt;
 ]
 .pull-right[
-```{r, fig.align='center', out.height='300', out.width='400', echo=F}
-knitr::include_graphics("img/Dist_sate.png")
-```
+&lt;img src="img/Dist_sate.png" width="400" height="300" style="display: block; margin: auto;" /&gt;
 ]
 ---
 
 * Se puede mejorar la estimación del tratamiento mediante diseños muestrales que disminuyan muestras no balanceadas.
 * El aspecto más importante en el diseño es **recolectar información pre tratamiento** que pueda se usada para realizar muestras balanceada.
 
-```{r, fig.align='center', out.height='350', out.width='800', echo=F}
-knitr::include_graphics("img/efecto promedio.jpeg")
-```
+&lt;img src="img/efecto promedio.jpeg" width="800" height="350" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -416,3 +430,126 @@ class: inverse, center, middle
 
 
 
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
