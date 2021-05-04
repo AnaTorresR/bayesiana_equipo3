@@ -1,6 +1,6 @@
 ---
 title: "Modelos Lineales Generalizados"
-subtitle: "⚔ Capítulo 18 ⚔<br/>"
+subtitle: "⚔ Inferencia causal y experimentos aleatorios. ⚔<br/>"
 author: 
   - Iván Oswaldo Salgado Velázquez
   - Aide Jazmín González Cruz
@@ -43,9 +43,9 @@ xaringanExtra::style_panelset_tabs(
 
 # Objetivo
 
-El objetivo de este capítulo es conocer las principales definiciones y problemáticas asociados a los diseños de experimentos que pretenden inferir el efecto asociado a un tratamiento o exposición aplicado a un individuo. 
+</br>
 
-A lo largo del capítulo se analizan diferentes problemas junto con sus respectivas hipótesis y propuestas de solución.
+El objetivo de este capítulo es conocer las principales definiciones y problemáticas asociados a los diseños de experimentos que pretenden inferir el efecto asociado a un tratamiento o exposición aplicado a un individuo. 
 
 ---
 class: inverse, center, middle
@@ -60,9 +60,13 @@ class: inverse, center, middle
 
 <div style="text-align: justify">
 
-Los efectos causales se conceptualizan como una comparación entre los diferentes resultados potenciales y los resultados que podría haber sucedido en otros escenarios. (Estado fáctico / Estados contrafácticos)
+Los efectos causales son una comparación entre los resultados potenciales y los resultados que podría haber sucedido en otros escenarios.
 
-**Ejemplo:** Tomemos el efecto en el consumo de ácidos grasos omega-3, como una estrategía eficaz para abordar una afeción médica como es la presión arterial sistólica (presión máxima que ejerce el corazón mientras late), en este caso se considera ***presión arterial alta*** niveles de $160mmHG$ o superiores.
+</br>
+
+**Ejemplo:** Medir el efecto en el consumo de ácidos grasos omega-3, como estrategía en la reducción de presión arterial sistólica (presión máxima que ejerce el corazón mientras late).
+
+</br>
 
 ```{r, fig.align='center', out.height='220', out.width='450', echo=F}
 knitr::include_graphics("img/8_individuos.png")
@@ -105,9 +109,6 @@ Por tanto el efecto causal puede expresarse como: La diferencia de lo que hubier
 
 ---
 <div style="text-align: justify">
-</br>
-</br>
-Supongamos que un individuo $j^{th}$ antes del tratamiento tiene una presión de $140mmHg$, recibe suplementos, y al termino su medición fue de $y_{j}^1 = 135mmHg$. ¿Este descenso proporciona evidencia suficiente de que los suplementos causan una reducción en la presión arterial? 
 
 ## El problema fundamental de la inferencia causal
 
@@ -115,11 +116,11 @@ El problema inherente de la inferencia causal es que nunca podemos observar los 
 
 ## Sustitutos próximos
 
-¿Qué pasaría si tuviéramos la presión arterial de individuo antes del estudio? ¿Podríamos usar eso como un sustituto de su $y_{j}^0?$ 
+- ¿Qué pasaría si tuviéramos la presión arterial de individuo antes del estudio? 
 
-Comenzamos a plantear escenarios:
+- ¿Podríamos usar eso como un sustituto de su $y_{j}^0?$ 
 
-- ¿Nos puede ayudar la idea básica detrás de un diseño de estudio antes vs después?
+- ¿Una solución es podría se el aplicar un diseño de estudio antes $vs$ después?
 
 ???
 Supongamos que un individuo $j^{th}$ antes del tratamiento tiene una presión de $140mmHg$, recibe suplementos, y al termino su medición fue de $y_{j}^1 = 135mmHg$. Esto nos lleva a preguntarnos si ¿Este descenso proporciona evidencia suficiente de que los suplementos causan una reducción en la presión arterial? 
